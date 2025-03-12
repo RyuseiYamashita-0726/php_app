@@ -5,12 +5,13 @@
     <title>新規作成</title>
 </head><</div>
 <body>
-    <form action="" method="post">
+    <form action="store.php" method="post">
         <input type="text" name="content">
         <input type= "submit" value="作成">
-</form>
+    </form>
 <div>
-    <a href="">一覧へもどる</a>
+    <a href="index.html">一覧へもどる</a>
 </div>
+
 </body>
 </html>
