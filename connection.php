@@ -46,6 +46,19 @@ function getAllRecords()
 
 }
 
+function updateTodoData($post)
+{
+    $dbh = connectPdo();
+    $sql = 'update todos set cpntent = "' . $post['content'] . '"where id = ' . $post['id'];
+    $dbh->query($sql);
+}
 
+function getTodoTexteById($id)
+{
+    $dbh = connectPdo();
+    $sql = 'select * from todos where deleted_at is null and id = $id';
+    $data = $dbh->query($sql)->fetch();
+    return $data['content'];
+}
 
 ?>

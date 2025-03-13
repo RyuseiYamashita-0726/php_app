@@ -28,7 +28,8 @@ require_once('function.php');
                         <td><?=$todo['id']; ?></td>
                         <td><?=$todo['content']; ?></td>
                         <td>
-                            <a href = "">更新</a>
+                            <a href = "edit.php?id=<?= $todo['id'];?>">更新</a>
+                <!--クエリパラメータで$_GET変数に格納。左辺がキーで右辺が値。 -->
                         </td>
                         <td>
                             <form action="store.php" method="post">

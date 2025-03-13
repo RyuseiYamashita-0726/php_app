@@ -12,3 +12,7 @@ function getTodoList()
     return getALLRecords();
 }
 
+function getSelectedTodo($id)
+{
+    return getTodoTextById($id);
+}
