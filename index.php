@@ -28,7 +28,7 @@ require_once('function.php');
                         <td><?=$todo['id']; ?></td>
                         <td><?=$todo['content']; ?></td>
                         <td>
-                            <a href = "">更新</a>
+                            <a href = "edit.php?id=<?= $todo[]">更新</a>
                         </td>
                         <td>
                             <form action="store.php" method="post">
