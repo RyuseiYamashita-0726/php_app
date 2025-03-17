@@ -58,4 +58,16 @@ function getTodoTextById($id)
     return $data['content'];
 }
 
+function deleteTodoData($deletId)
+{
+    $dbh = connectPDO();
+    $now = date('Y-m-d H:i:s');
+    $sql = 'update todos set deleted_at = "' . $now . '" where id = ' . $deletId;
+   // update todos set deleted_at = [2025-03-17 18:53:00] where id = 1;
+
+    $dbh->query($sql);
+}
+
+
+
 ?>

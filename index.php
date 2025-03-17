@@ -33,7 +33,7 @@ require_once('function.php');
                         </td>
                         <td>
                             <form action="store.php" method="post">
-                                <input type="hidden" name="id" value="">
+                                <input type="hidden" name="id" value="<?= $todo['id']; ?>">
                                 <button type="submit">削除</button>
                             </form>
                         </td>
