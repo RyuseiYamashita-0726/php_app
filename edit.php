@@ -11,7 +11,7 @@ $todo = getSelectedTodo($_GET['id']);
 </head>
 <body>
     <form action="store.php" method="post">
-        <input type="hidden" name="id" value="<?= $GET['id']; ?>">
+        <input type="hidden" name="id" value="<?= $_GET['id']; ?>">
         <input type="text" name="content" value="<?= $todo ?>">
         <input type="submit" value="更新">
     </form>

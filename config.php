@@ -32,6 +32,7 @@ function errorHandler($errNo,$errStr,$errFile,$errLine)
 
 define('DSN', 'mysql:dbname=php_lesson;host=localhost;unix_socket=/tmp/mysql.sock');
 //define関数でDSN定数を宣言し、第二引数で接続に必要な情報を渡す。
+//DSNはデータソースネームの略。
 //書き方が決まっている？ 
 //mysql:dbname=php_lesson; → データベースの種類:dbname=任意のDB名
 //host=localhost; → host=データベースサーバーのホスト名

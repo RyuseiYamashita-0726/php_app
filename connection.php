@@ -3,26 +3,23 @@ require_once('config.php');
 //()内のファイルを一度だけ読み込む関数。
 
 function connectPdo()
+/*この関数の目的は、PDOクラスのインスタンスを返すこと。*/
 {
     try{
         return new PDO(DSN,DB_USER,DB_PASSWORD);
-        }catch(PDOException $e) {
+        }//ここまでで、インスタンスを返す処理。
+        catch(PDOException $e) {
+        /*もし失敗した場合、catch{}内の処理を実行。PDOExceptionがthrowされるので、$eに代入してメソッドを使える状態にする。*/
         echo $e->getMessage();
+        /*getMessageメソッドを呼び出す。*/
         exit();
+        //処理終了。
     }
 }
-
-//try catch文を使って、PDOクラスをインスタンス化したものを
-//$eに代入し、getMessage関数を呼び出して、処理を終了している。
 
 //PDOクラス(PHP Data Objects)はDB接続に必要な
 //DB抽象化ライブラリ。異なるDB(mysql,postgresql,sqliteなど)
 //に対して、共通のインタフェースで操作を行う事が出来る。
-
-//try catch文を使う理由は、発生する可能性のある例外を適切に処理するため。
-//そのままインスタンス化して使用するとエラーを起こしたときに、
-//単純にfalseと返す。？
-
 
 function createTodoData($todoText)
 {
@@ -49,14 +46,14 @@ function getAllRecords()
 function updateTodoData($post)
 {
     $dbh = connectPdo();
-    $sql = 'update todos set cpntent = "' . $post['content'] . '"where id = ' . $post['id'];
+    $sql = 'update todos set content = "' . $post['content'] . '"where id = ' . $post['id'];
     $dbh->query($sql);
 }
 
-function getTodoTexteById($id)
+function getTodoTextById($id)
 {
     $dbh = connectPdo();
-    $sql = 'select * from todos where deleted_at is null and id = $id';
+    $sql = "select * from todos where deleted_at is null and id = $id";
     $data = $dbh->query($sql)->fetch();
     return $data['content'];
 }
