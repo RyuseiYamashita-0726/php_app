@@ -25,10 +25,10 @@ function createTodoData($todoText)
 {
     $dbh = connectPdo();
      //PDOをインスタンス化、$dbhはDatabase Handleの略。
-    $sql = 'INSERT INTO todos (content) VALUES ("' . $todoText . '")';
-    //↑ 引数$todoTextに格納されたテキストをINSERT文に結合。
-    $dbh->query($sql);
-    //PDOクラスのクエリ関数を使って、DBを操作する。
+    $sql = 'INSERT INTO todos (content) VALUES (:todoText)';
+    $stmt = $dbh->prepare($sql);
+    $stmt->bindValue(':todoText', $todoText, PDO::PARAM_STR);
+    $stmt->execute();
 }
 
 function getAllRecords()
@@ -46,7 +46,11 @@ function getAllRecords()
 function updateTodoData($post)
 {
     $dbh = connectPdo();
-    $sql = 'update todos set content = "' . $post['content'] . '"where id = ' . $post['id'];
+    $sql = 'update todos set content = :todoTxte where id = :id';
+    $stmt = $dbh->prepare($sql);
+    $stmt->bindValue(':todoText', $post['content'], PDO::PARAM_STR);
+    $stmt->bindValue(':id', (int) $post['id'], PDO::PARAM_INT);
+    $stmt->execute();    
     $dbh->query($sql);
 }
 

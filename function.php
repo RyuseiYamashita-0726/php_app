@@ -1,5 +1,40 @@
 <?php
 require_once('connection.php');
+session_start();
+
+function setToken()
+{
+    $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(16));
+
+}
+
+function checkToken($token)
+{
+    if(empty($_SESSION['token']) || ($_SESSION['token'] !== $token)){
+        $_SESSION['err'] = '不正な操作です';
+        redirecToPostedPage();
+    }
+}
+
+function unsetError()
+{
+    $_SESSION['err'] = '';
+}
+
+function redirectToPostedPage()
+{
+    header('Location: ' . $_SERVER['http_REFERER']);
+    exit;
+}
+
+
+
+function e($text)
+{
+    return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
+}
+//関数名が長いのでeに変えている？、引数多いし。
+
 
 function createData($post)
 {
@@ -19,6 +54,7 @@ function getSelectedTodo($id)
 
 function savePostedData($post)
 {
+    checkToken($post['token']);
     $path = getRefererPath();
     switch ($path){
         case '/new.php':

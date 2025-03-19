@@ -1,5 +1,9 @@
 <?php
 require_once('function.php');
+header('Set-Cookie: userId=123');
+//header関数によるクッキーの指定ができる。
+//第一引数に何を指定するかで動きが変わる。
+setToken();
 ?>
 
 <!DOCTYPE html>
@@ -10,6 +14,9 @@ require_once('function.php');
     </head>
     <body>
         welcome hello world
+        <?php if (!empty($_SESSION['err'])): ?> 
+        <p><?= $_SESSION['err']; ?></p> 
+        <?php endif; ?> 
         <div>
             <a href ="new.php">
                 <p>新規作成</p>
@@ -25,15 +32,16 @@ require_once('function.php');
                 </tr>
                 <?php foreach (getTodoList() as $todo): ?>
                     <tr>
-                        <td><?=$todo['id']; ?></td>
-                        <td><?=$todo['content']; ?></td>
+                        <td><?=e($todo['id']); ?></td>
+                        <td><?=e($todo['content']); ?></td>
                         <td>
-                            <a href = "edit.php?id=<?= $todo['id'];?>">更新</a>
+                            <a href = "edit.php?id=<?= e($todo['id']);?>">更新</a>
                 <!--クエリパラメータで$_GET変数に格納。左辺がキーで右辺が値。 -->
                         </td>
                         <td>
                             <form action="store.php" method="post">
-                                <input type="hidden" name="id" value="<?= $todo['id']; ?>">
+                                <input type="hidden" name="id" value="<?= e($todo['id']); ?>">
+                                <input type="hidden" name="token" value="<?= $_SESSION['token']; ?>">
                                 <button type="submit">削除</button>
                             </form>
                         </td>
@@ -41,5 +49,6 @@ require_once('function.php');
                 <?php endforeach; ?>
             </table>
         </div>
+        <?php unsetError(); ?>
     </body>
 </html>
