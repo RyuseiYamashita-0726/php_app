@@ -1,6 +1,7 @@
 <?php
 require_once('function.php');
 $todo = getSelectedTodo($_GET['id']);
+
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +15,7 @@ $todo = getSelectedTodo($_GET['id']);
     <p><?= $_SESSION['err']; ?></p>
     <?php endif; ?> 
     <form action="store.php" method="post">
-    <input type="hidden" name="token" value="<?= $_SESSION['token']; ?>">
+        <input type="hidden" name="token" value="<?= $_SESSION['token']; ?>">
         <input type="hidden" name="id" value="<?= e($_GET['id']); ?>">
         <input type="text" name="content" value="<?= e($todo) ?>">
         <input type="submit" value="更新">

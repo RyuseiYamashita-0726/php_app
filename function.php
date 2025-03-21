@@ -35,7 +35,6 @@ function e($text)
 }
 //関数名が長いのでeに変えている？、引数多いし。
 
-
 function createData($post)
 {
     createTodoData($post['content']);

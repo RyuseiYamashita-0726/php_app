@@ -46,19 +46,28 @@ function getAllRecords()
 function updateTodoData($post)
 {
     $dbh = connectPdo();
-    $sql = 'update todos set content = :todoTxte where id = :id';
+    $sql = 'update todos set content = :todoText where id = :id';
     $stmt = $dbh->prepare($sql);
     $stmt->bindValue(':todoText', $post['content'], PDO::PARAM_STR);
     $stmt->bindValue(':id', (int) $post['id'], PDO::PARAM_INT);
-    $stmt->execute();    
-    $dbh->query($sql);
+    //bindValue()が攻撃を防げる理由は、入力される内容を「値」としてSQL文に組み込むことで
+    //ユーザーが改ざんできないようにする。
+    $stmt->execute();
 }
 
 function getTodoTextById($id)
 {
+
     $dbh = connectPdo();
-    $sql = "select * from todos where deleted_at is null and id = $id";
-    $data = $dbh->query($sql)->fetch();
+    $sql = 'select * from todos where deleted_at is null and id = :id';
+    $stmt = $dbh->prepare($sql);
+    $stmt->bindValue(':id', $id, PDO::PARAM_STR);
+    //var_dump($id);
+    //exit;
+    $stmt->execute();
+    $data = $stmt->fetch();
+    //fetch(PDO::FETCH_ASSOC)はPDOから受け取ったデータを連想配列として返すメソッド。
+
     return $data['content'];
 }
 
@@ -66,12 +75,11 @@ function deleteTodoData($deletId)
 {
     $dbh = connectPDO();
     $now = date('Y-m-d H:i:s');
-    $sql = 'update todos set deleted_at = "' . $now . '" where id = ' . $deletId;
-   // update todos set deleted_at = [2025-03-17 18:53:00] where id = 1;
-
-    $dbh->query($sql);
+    $sql = 'update todos set deleted_at = :now where id = :deletId';
+    $stmt = $dbh->prepare($sql);
+    $stmt->bindValue(':now', $now, PDO::PARAM_STR);
+    $stmt->bindValue(':deletId', $deletId, PDO::PARAM_INT);
+    $stmt->execute();
 }
-
-
 
 ?>
